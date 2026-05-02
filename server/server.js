@@ -27,9 +27,12 @@ app.use(limiter);
 
 
 
-app.get('/', (req, res) => {
-    res.status(201).json({ name: "Himanshu", age: 20 });
-})
+// app.get('/', (req, res) => {
+//     res.status(201).json({ name: "Himanshu", age: 20 });
+// })
+app.get('/',(req,res)=>{
+    res.send('Welcome to the server');
+});
 
 // api endpoints
 app.use('/api/user',userRouter);
