@@ -11,9 +11,9 @@ const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const cors = require('cors');
 
-const userRouter=require('./routes/userRoutes');
-const adminRouter=require('./routes/adminRoutes');
-const contentRouter=require('./routes/contentRoutes');
+const userRouter = require('./routes/userRoutes');
+const adminRouter = require('./routes/adminRoutes');
+const contentRouter = require('./routes/contentRoutes');
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
@@ -30,14 +30,15 @@ app.use(limiter);
 // app.get('/', (req, res) => {
 //     res.status(201).json({ name: "Himanshu", age: 20 });
 // })
-app.get('/',(req,res)=>{
+
+app.get('/', (req, res) => {
     res.send('Welcome to the server');
 });
 
 // api endpoints
-app.use('/api/user',userRouter);
-app.use('/api/admin',adminRouter);
-app.use('api/content',contentRouter);
+app.use('/api/user', userRouter);
+app.use('/api/admin', adminRouter);
+app.use('/api/content', contentRouter);
 
 
 // https.createServer(
@@ -50,10 +51,13 @@ app.use('api/content',contentRouter);
 //             console.log(`server is running on port ${PORT}`);
 //         }
 //     });
-app.listen(PORT,(err)=>{
-    if(!err){
-        console.log(`server is running on port ${PORT}`);
-    }
-});
+
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, (err) => {
+        if (!err) {
+            console.log(`server is running on port ${PORT}`);
+        }
+    });
+}
 
 module.exports = app;
