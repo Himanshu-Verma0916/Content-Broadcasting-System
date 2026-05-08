@@ -10,7 +10,6 @@ This project is a role-based Content Broadcasting System where:
 - Admin (Principal) reviews and approves/rejects content
 - Students access approved content through a public broadcasting API
 - Approved content rotates dynamically based on scheduling logic
-
 ---
 
 ## Tech Stack
