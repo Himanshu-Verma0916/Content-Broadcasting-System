@@ -4,9 +4,9 @@ const Content =require('../models/contentModel');
 
 const uploadContent=async(req,res)=>{
     try {
-        const {title, description, subject, fileUrl, startTime, endTime}= req.body;
+        const {title, description, subject, startTime, endTime, rotationDuration, rotationOrder}= req.body;
 
-        if(!title || !subject || !fileUrl || !startTime || !endTime){
+        if(!title || !subject ||!req.file || !startTime || !endTime){
             return res.status(400).json({success:false, message:"All required fields missing"});
         }
 
@@ -19,7 +19,7 @@ const uploadContent=async(req,res)=>{
             startTime,
             endTime,
 
-            rotationalDuration:rotationDuration || 5,
+            rotationDuration:rotationDuration || 5,
             rotationOrder:rotationOrder || 1
         });
 
@@ -35,7 +35,7 @@ const uploadContent=async(req,res)=>{
 
 const getMyContent =async(req,res)=>{
     try {
-        const data =(await Content.find({uploadedBy:req.user._id})).toSorted({createdAt:-1});
+        const data =await Content.find({uploadedBy:req.user._id}).sort({createdAt:-1});
         res.status(200).json({success:true,count:data.length, data});
 
     } catch (error) {
@@ -71,7 +71,7 @@ const getLiveContent =async(req,res)=>{
         return res.status(404).json({success:false, message:"No live content found"});
        }
 
-       let duration= contents[0].rotationalDuration; // Assuming all contents have same rotation duration, you can modify as per your requirement
+       let duration= contents[0].rotationDuration; // Assuming all contents have same rotation duration, you can modify as per your requirement
 
        let currentMinute=Math.floor(Date.now()/60000); // Get the current minute
 
