@@ -1,4 +1,9 @@
 const multer =require('multer');
+const fs = require("fs");
+
+if (!fs.existsSync("uploads")) {
+    fs.mkdirSync("uploads");
+}
 
 const storage = multer.diskStorage({
     destination:function(req,file,cb){  // cb=callback function
@@ -14,7 +19,8 @@ const fileFilter = (req, file, cb) => {
     const allowedTypes = [
         "image/jpeg",
         "image/png",
-        "image/gif"
+        "image/gif",
+        "application/pdf"
     ];
 
     if (allowedTypes.includes(file.mimetype)) {

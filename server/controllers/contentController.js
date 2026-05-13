@@ -1,4 +1,5 @@
 const Content =require('../models/contentModel');
+const mongoose =require('mongoose');
 
 // Teacher uploads content
 
@@ -51,7 +52,13 @@ const getLiveContent =async(req,res)=>{
        const {teacherId}=req.params;
        const {subject}= req.query;
 
-       let query = {uploadedBy:teacherId, status:"approved"};
+       console.log("teacherId:", teacherId);
+        console.log("subject:", subject);
+
+       let query = {
+        uploadedBy: teacherId,
+        status:"approved"
+    };
        
        if(subject){
         query.subject=subject;
@@ -70,6 +77,7 @@ const getLiveContent =async(req,res)=>{
        if(!contents.length){
         return res.status(404).json({success:false, message:"No live content found"});
        }
+       console.log("live contents:", contents);
 
        let duration= contents[0].rotationDuration; // Assuming all contents have same rotation duration, you can modify as per your requirement
 
